@@ -1,0 +1,165 @@
+ {% comment %} <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatGPT Demo</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>ChatGPT Demo</h1>
+    <div id="chat-container">
+        <div id="chat-messages"></div>
+        <input type="text" id="user-input" placeholder="Type your message...">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <script>
+        function sendMessage() {
+            var userInput = $('#user-input').val();
+            if (userInput.trim() !== '') {
+                $('#chat-messages').append('<p><strong>You:</strong> ' + userInput + '</p>');
+                $('#user-input').val('');
+
+                $.ajax({
+                    url: '{% url "chatview" %}',
+                    type: 'POST',
+                    data: {
+                        'message': userInput
+                    },
+                    success: function(response) {
+                        $('#chat-messages').append('<p><strong>AI:</strong> ' + response.message + '</p>');
+                    }
+                });
+            }
+        }
+
+        $('#user-input').keypress(function(e) {
+            if (e.which == 13) {
+                sendMessage();
+            }
+        });
+    </script>
+</body>
+</html>  
+  {% endcomment %}
+
+   {% include "header.html" %}
+ {% block content %}
+ 
+ 
+  
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Campus AI Chatbot</title>
+    <style>
+         /* CSS is simplified for brevity. Use external stylesheet/framework in production. */
+        body { font-family: Arial, sans-serif; background-color: #151583ff; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .chat-container { width: 450px; height: 600px; background: white; border-radius: 10px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; }
+        .chat-header { background-color: #007bff; color: white; padding: 15px; border-top-left-radius: 10px; border-top-right-radius: 10px; text-align: center; }
+        #chat-window { flex-grow: 1; overflow-y: auto; padding: 20px; }
+        .message { margin-bottom: 15px; display: flex; }
+        .user-message { justify-content: flex-end; }
+        .ai-message { justify-content: flex-start; }
+        .bubble { max-width: 80%; padding: 10px 15px; border-radius: 18px; line-height: 1.4; }
+        .user-message .bubble { background-color: #007bff; color: white; border-bottom-right-radius: 2px; }
+        .ai-message .bubble { background-color: #e9ecef; color: #333; border-bottom-left-radius: 2px; }
+        #input-form { display: flex; padding: 15px; border-top: 1px solid #ccc; }
+        #user-input { flex-grow: 1; padding: 10px; border: 1px solid #ced4da; border-radius: 20px; margin-right: 10px; }
+        #send-btn { padding: 10px 15px; background-color: #28a745; color: white; border: none; border-radius: 20px; cursor: pointer; }
+        #send-btn:disabled { background-color: #6c757d; cursor: not-allowed; } 
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">Campus AI Assistant</div>
+        <div id="chat-window">
+            <div class="message ai-message">
+                <div class="bubble">Hello! I'm your Campus AI Assistant. How can I help you with academic or campus queries?</div>
+            </div>
+            
+            {% for msg in history %}
+                <div class="message {{ msg.role }}-message">
+                    <div class="bubble">{{ msg.content }}</div>
+                </div>
+            {% endfor %}
+        </div>
+        
+        <form id="input-form">
+            {% csrf_token %} 
+            <input type="text" id="user-input" placeholder="Type your query..." required>
+            <button type="submit" id="send-btn">Send</button>
+        </form>
+    </div>
+
+    <script>
+        const chatWindow = document.getElementById('chat-window');
+        const inputForm = document.getElementById('input-form');
+        const userInput = document.getElementById('user-input');
+        const sendBtn = document.getElementById('send-btn');
+        
+        function getCsrfToken() {
+            return document.querySelector('[name=csrfmiddlewaretoken]').value;
+        }
+
+        function appendMessage(sender, text) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}-message`;
+
+            const bubbleDiv = document.createElement('div');
+            bubbleDiv.className = 'bubble';
+            bubbleDiv.textContent = text;
+
+            messageDiv.appendChild(bubbleDiv);
+            chatWindow.appendChild(messageDiv);
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+        }
+
+        inputForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const message = userInput.value.trim();
+            if (!message) return;
+
+            appendMessage('user', message);
+            userInput.value = ''; 
+            sendBtn.disabled = true; 
+
+            fetch("{% url 'chat_api' %}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCsrfToken()
+                },
+                body: JSON.stringify({ message: message })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.response) {
+                    appendMessage('ai', data.response);
+                } else if (data.error) {
+                    appendMessage('ai', `System Error: ${data.error}`);
+                }
+            })
+            .catch(error => {
+                console.error('Fetch error:', error);
+                appendMessage('ai', 'Sorry, I failed to communicate with the AI service.');
+            })
+            .finally(() => {
+                sendBtn.disabled = false; 
+                userInput.focus(); 
+            });
+        });
+    </script>
+</body>
+</html>
+
+
+
+ 
+ {% endblock  %}
+
+
+
+ {% include "footer.html" %}

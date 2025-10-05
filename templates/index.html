@@ -1,0 +1,320 @@
+ {% extends "base.html" %}
+
+ {% block content  %}
+     {% comment %} <main style="margin:0px;padding:0px;">
+    <!-- ===== Hero Start ===== -->
+    <section class="gj do ir hj sp jr i pg" styl="background:url(/static/images/aaa.jpg);height:50vw; background-repeat: no-repeat;">
+      <!-- Hero Images -->
+      <div class="xc fn zd/2 2xl:ud-w-187.5 bd 2xl:ud-h-171.5 h q r">
+         
+        <img src="/static/images/aaa.jpg" alt="Woman" class="h q r ua" />
+      </div>  
+
+      <!-- Hero Content -->
+        <div class="bb ze ki xn 2xl:ud-px-0">
+        <div class="tc _o">
+          <div class="animate_left jn/2">
+             
+            
+
+            <div class="tc tf yo zf mb">
+              <a href="{% url "chatview" %}" class="ek jk lk gh gi hi rg ml il vc _d _l">Get Started Now</a>
+ 
+            </div>
+          </div>
+        </div>
+      </div>  
+    <!-- ===== Hero End ===== -->
+
+ 
+    <!-- ===== CTA End ===== -->
+  </main>   
+
+  {% endcomment %}
+  
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus GPT - Your AI College Assistant</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Basic Reset & Body Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #6dd5ed, #2193b0); /* Primary blue gradient */
+            color: #fff;
+            overflow: hidden; /* Prevent scrollbar from background animation */
+            position: relative;
+        }
+
+        /* --- Background Animation --- */
+        .background-animation {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .background-animation span {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: moveCircle 15s infinite ease-in-out;
+        }
+
+        /* Keyframes for floating background circles */
+        @keyframes moveCircle {
+            0% { transform: translate(0, 0) scale(1); opacity: 0; }
+            25% { opacity: 1; }
+            50% { transform: translate(calc(var(--rand-x) * 1px), calc(var(--rand-y) * 1px)) scale(var(--rand-scale)); opacity: 0.5; }
+            75% { opacity: 0.7; }
+            100% { transform: translate(0, 0) scale(1); opacity: 0; }
+        }
+
+        /* --- Main Container --- */
+        .container {
+            background: rgba(255, 255, 255, 0.15); /* Semi-transparent white background */
+            backdrop-filter: blur(10px); /* Frosted glass effect */
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            text-align: center;
+            max-width: 900px;
+            margin: 20px;
+            animation: fadeIn 1s ease-out forwards;
+            position: relative;
+            z-index: 1; /* Ensure content is above background animation */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            animation: slideInTop 0.8s ease-out forwards;
+        }
+
+        p {
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            line-height: 1.6;
+            animation: slideInTop 1s ease-out forwards 0.2s;
+            opacity: 0; /* Hidden initially for animation */
+        }
+
+        @keyframes slideInTop {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- Feature Cards --- */
+        .feature-cards {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 25px;
+            width: 200px;
+            text-align: center;
+            transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            text-decoration: none; /* For anchor tags */
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            animation: cardPopIn 0.6s ease-out forwards var(--card-delay); /* Dynamic delay */
+            opacity: 0;
+            transform: scale(0.8);
+        }
+
+        @keyframes cardPopIn {
+            from { opacity: 0; transform: scale(0.8) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .card:hover {
+            transform: translateY(-10px) scale(1.05);
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .card i { /* Icon styling */
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            color: #a8efff; /* Lighter blue for icons */
+        }
+
+        .card h3 {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .card p {
+            font-size: 0.9em;
+            line-height: 1.4;
+            opacity: 0.9;
+            margin-bottom: 0; /* Override default paragraph margin */
+            animation: none; /* Disable global paragraph animation for card paragraphs */
+        }
+
+        /* --- Chatbot Button --- */
+        .launch-button {
+            background: #fff; /* White button */
+            color: #2193b0; /* Primary blue text */
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1.2em;
+            font-weight: 700;
+            transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            animation: buttonScaleIn 0.8s ease-out forwards 0.8s;
+            opacity: 0; /* Hidden initially */
+            display: inline-block; /* Allows for top/bottom padding and margin */
+        }
+
+        @keyframes buttonScaleIn {
+            from { opacity: 0; transform: scale(0.5); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .launch-button:hover {
+            background: #e0f7fa; /* Lighter blue on hover */
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2em;
+            }
+            p {
+                font-size: 1em;
+            }
+            .feature-cards {
+                flex-direction: column;
+                align-items: center;
+            }
+            .card {
+                width: 80%; /* Cards take more width on smaller screens */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 25px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .launch-button {
+                padding: 12px 25px;
+                font-size: 1em;
+            }
+        }
+
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="background-animation" id="background-animation"></div>
+
+    <div class="container">
+        <h1>Welcome to Campus GPT!</h1>
+        <p>Your intelligent assistant for all academic and campus-related queries. Get instant access to schedules, contacts, and knowledge.</p>
+
+        <div class="feature-cards">
+            <a href="{% url "classtime" %}" class="card" style="--card-delay: 0.4s;">
+                <i class="fas fa-calendar-alt"></i>
+                <h3>Class Timetable</h3>
+                <p>View your daily class schedule easily.</p>
+            </a>
+            <a href="{% url "exam" %}" class="card" style="--card-delay: 0.6s;">
+                <i class="fas fa-file-alt"></i>
+                <h3>Exam Schedules</h3>
+                <p>Stay updated on all your upcoming exams.</p>
+            </a>
+            <a href="{% url "faculty" %}" class="card" style="--card-delay: 0.8s;">
+                <i class="fas fa-users"></i>
+                <h3>Faculty Contacts</h3>
+                <p>Find contact details for all faculty members.</p>
+            </a>
+        </div>
+ 
+         <a href="{% url "chatview" %}" class="ek jk lk gh gi hi rg ml il vc _d _l"> Launch Campus GPT Chat</a>
+    </div>
+
+    <script>
+        // JavaScript for dynamic background circles
+        document.addEventListener('DOMContentLoaded', () => {
+            const backgroundAnimation = document.getElementById('background-animation');
+            const numCircles = 8; // Number of animated circles
+
+            for (let i = 0; i < numCircles; i++) {
+                const span = document.createElement('span');
+                
+                // Randomize initial position, size, and animation properties
+                const size = Math.random() * 80 + 40; // Size between 40px and 120px
+                const left = Math.random() * 100; // 0-100%
+                const top = Math.random() * 100; // 0-100%
+                const duration = Math.random() * 10 + 10; // 10-20 seconds
+                const delay = Math.random() * 10; // 0-10 seconds
+                
+                // For the 'moveCircle' animation, randomize translation and scale
+                const randX = Math.random() * 300 - 150; // -150 to 150
+                const randY = Math.random() * 300 - 150; // -150 to 150
+                const randScale = Math.random() * 0.5 + 0.8; // 0.8 to 1.3
+
+                span.style.cssText = `
+                    width: ${size}px;
+                    height: ${size}px;
+                    left: ${left}%;
+                    top: ${top}%;
+                    animation-duration: ${duration}s;
+                    animation-delay: ${delay}s;
+                    /* Custom properties for keyframe randomization */
+                    --rand-x: ${randX};
+                    --rand-y: ${randY};
+                    --rand-scale: ${randScale};
+                `;
+                backgroundAnimation.appendChild(span);
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+ {% endblock  %}
+
+
+
+ {% include "footer.html" %}

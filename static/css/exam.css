@@ -1,0 +1,194 @@
+ 
+/* --- Global Styles --- */
+:root {
+    --primary-color: #007bff; /* Blue for highlights */
+    --secondary-color: #6c757d; /* Gray for borders/subtext */
+    --background-light: #f8f9fa; /* Light gray background */
+    --card-background: #ffffff; /* White card background */
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--background-light);
+    color: #343a40;
+    margin-top:100px;
+    padding: 20px;
+}
+
+h2 {
+    color: var(--primary-color);
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+/* --- Timetable Styles --- */
+
+/* Wrapper for horizontal scrolling on small screens */
+.responsive-table-container {
+    width: 100%;
+    overflow-x: auto; 
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+.timetable-table {
+    width: 100%;
+    min-width: 600px; /* Ensures table is wide enough on mobile to trigger scroll */
+    border-collapse: collapse;
+    background-color: var(--card-background);
+}
+
+.timetable-table th, .timetable-table td {
+    padding: 12px 15px;
+    border: 1px solid #dee2e6;
+    text-align: center;
+}
+
+.timetable-table th {
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: 600;
+}
+
+.timetable-table tr:nth-child(even) {
+    background-color: #f2f2f2; /* Zebra striping */
+}
+
+.class-cell {
+    background-color: #e9ecef; /* Light gray for cells with classes */
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.class-cell:hover {
+    background-color: #ced4da;
+}
+
+/* Specific class color coding (optional but good for UX) */
+.cs101 { background-color: #e6f7ff; } /* Light Blue */
+.math201 { background-color: #fff3e6; } /* Light Orange */
+
+
+/* --- Exam Schedule Styles (Card View) --- */
+.exam-filters {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.exam-filters input, .exam-filters select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    flex-grow: 1;
+}
+
+.exam-list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.exam-card {
+    display: flex;
+    background-color: var(--card-background);
+    border-left: 5px solid var(--primary-color);
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+}
+
+.exam-date-time {
+    min-width: 150px;
+    padding-right: 15px;
+    border-right: 1px solid #dee2e6;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.exam-date-time .date {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.exam-details {
+    padding-left: 15px;
+}
+
+.exam-details h3 {
+    margin: 0 0 5px 0;
+    color: #343a40;
+}
+
+/* --- Faculty Contacts Styles (Grid/Card View) --- */
+
+.faculty-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.faculty-card {
+    background-color: var(--card-background);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+}
+
+.faculty-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+.faculty-photo {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 15px;
+    border: 3px solid var(--primary-color);
+}
+
+.faculty-name {
+    margin: 5px 0;
+    color: var(--primary-color);
+}
+
+.faculty-department {
+    font-style: italic;
+    color: var(--secondary-color);
+    margin-bottom: 10px;
+}
+
+.email-link {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+}
+.email-link:hover {
+    text-decoration: underline;
+}
+
+/* --- Mobile Responsiveness Adjustments --- */
+@media (max-width: 768px) {
+    .exam-card {
+        flex-direction: column; /* Stacks date/time on top of details */
+    }
+    
+    .exam-date-time {
+        border-right: none;
+        border-bottom: 1px solid #dee2e6;
+        padding-right: 0;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+    }
+    
+    .exam-details {
+        padding-left: 0;
+    }
+}
+ 

@@ -1,0 +1,83 @@
+ 
+{% extends "base.html" %}
+
+{% block content%} 
+
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Academic Portal</title>
+    <style>
+        body { font-family: sans-serif; margin-: 100px; }
+        h1, h2 { color: #333; border-bottom: 2px solid #ccc; padding-bottom: 5px; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .section { margin-top: 40px; }
+        .day-header { background-color: #e0f7fa; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>University Academic Information</h1>
+
+    <div class="section">
+        <h2>Exam Schedules</h2>
+        {% if exam_schedule %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Course</th>
+                        <th>Room</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for exam in exam_schedule %}
+                        <tr>
+                            <td>{{ exam.exam_date|date:"D, M d, Y" }}</td>
+                            <td>{{ exam.start_time|date:"H:i" }} - {{ exam.end_time|date:"H:i" }}</td>
+                            <td>{{ exam.course.name }} ({{ exam.course.code }})</td>
+                            <td>{{ exam.room_number }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No exam schedule information available.</p>
+        {% endif %}
+    </div>
+{% comment %} 
+    <div class="section">
+        <h2>Faculty Contacts</h2>
+        {% if faculty_contacts %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Department</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for faculty in faculty_contacts %}
+                        <tr>
+                            <td>{{ faculty.name }}</td>
+                            <td>{{ faculty.department }}</td>
+                            <td><a href="mailto:{{ faculty.email }}">{{ faculty.email }}</a></td>
+                            <td>{{ faculty.phone|default:"N/A" }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No faculty contact information available.</p>
+        {% endif %}
+    </div>
+
+</body>
+</html> {% endcomment %}
+
+    {% endblock  %}  
